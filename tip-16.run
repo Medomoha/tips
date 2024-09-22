@@ -127,6 +127,41 @@ TransactionSignWeight {
 ```
 
 #### AddSign
+```json  
+{
+  "owner_address": "TDpBe64DqirkKWj6HWuR1p",
+  "owner": {
+    "type": 0,
+    "permission_name": "owner",
+    "threshold": 2,
+    "keys": [{
+        "address": "TDpBe64DqirkKWj6HWuR1p",
+        "weight": 1
+      },
+      {
+        "address": "Wgmnhw2wDacE",
+        "weight": 1
+      }
+    ]
+  },
+  "actives": [{
+    "type": 2,
+    "permission_name": "active0",
+    "threshold": 3,
+    "operations": "7fff1fc0037e0000000000000000000000000000000000000000000000000000",
+    "keys": [{
+        "address": "TDpBe64DqirkKWj6HWuR1p",
+        "weight": 1
+      },
+      {
+        "address": "Wgmnhw2wDacE",
+        "weight": 1
+      }
+    ]
+  }]
+}
+  
+```
  * @param transaction 
  * @return The transaction
 
