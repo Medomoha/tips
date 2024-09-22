@@ -67,7 +67,48 @@ Alice can assign witness-permission to the administrator. Since the administrato
   * @return The transaction 
  
  
-  Permission {
+  Permission {# -*- coding: utf-8 -*-
+
+from google.protobuf import transaction_pb2 as transaction
+
+def change_owner_signature(account_address, owner_address, private_key):
+  """Changes the owner signature of an account.
+
+  Args:
+    account_address (str): The address of the account to modify.
+    owner_address (str): The address of the new owner.
+    private_key (str): The private key of the current owner of the account.
+  """
+
+  contract = transaction.AccountPermissionUpdateContract()
+  contract.set_owner_address(ByteString.copyFromUtf8(account_address))
+
+  permission = transaction.Permission()
+  permission.set_type(transaction.PermissionType.Owner)
+  permission.set_threshold(1)
+  keys = [transaction.Key(address=ByteString.copyFromUtf8(owner_address), weight=1)]
+  permission.set_keysList(keys)
+  contract.set_owner(permission)
+
+  transaction = transaction.Transaction()
+  transaction.set_raw_data(contract.toByteString())
+
+  # Sign the transaction with the private key of the current owner of the account
+  transaction.sign(ByteString.copyFromUtf8(private_key))
+
+  # Broadcast the transaction to the network
+  ApiWrapper.getInstance().broadcastTransaction(transaction)
+
+
+if __name__ == "__main__":
+  # Replace these values with the address of the account you want to modify, the address of the new owner, and the private key of the current owner of the account.
+  account_address = "YOUR_ACCOUNT_ADDRESS"
+  owner_address = "TDpBe64DqirkKWj6HWuR1pWgmnhw2wDacE"
+  private_key = "YOUR_PRIVATE_KEY"
+
+  change_owner_signature(account_address, owner_address, private_key)
+```
+
     enum PermissionType {
       Owner = 0;
       Witness = 1;
@@ -127,6 +168,48 @@ TransactionSignWeight {
 ```
 
 #### AddSign
- * @param transaction 
- * @return The transaction
+# -*- coding: utf-8 -*-
+
+from google.protobuf import transaction_pb2 as transaction
+
+def change_owner_signature(account_address, owner_address, private_key):
+  """Changes the owner signature of an account.
+
+  Args:
+    account_address (str): The address of the account to modify.
+    owner_address (str): The address of the new owner.
+    private_key (str): The private key of the current owner of the account.
+  """
+
+  contract = transaction.AccountPermissionUpdateContract()
+  contract.set_owner_address(ByteString.copyFromUtf8(account_address))
+
+  permission = transaction.Permission()
+  permission.set_type(transaction.PermissionType.Owner)
+  permission.set_threshold(1)
+  keys = [transaction.Key(address=ByteString.copyFromUtf8(owner_address), weight=1)]
+  permission.set_keysList(keys)
+  contract.set_owner(permission)
+
+  transaction = transaction.Transaction()
+  transaction.set_raw_data(contract.toByteString())
+
+  # Sign the transaction with the private key of the current owner of the account
+  transaction.sign(ByteString.copyFromUtf8(private_key))
+
+  # Broadcast the transaction to the network
+  ApiWrapper.getInstance().broadcastTransaction(transaction)
+
+
+if __name__ == "__main__":
+  # Replace these values with the address of the account you want to modify, the address of the new owner, and the private key of the current owner of the account.
+  account_address = "YOUR_ACCOUNT_ADDRESS"
+  owner_address = "TDpBe64DqirkKWj6HWuR1pWgmnhw2wDacE"
+  private_key = "YOUR_PRIVATE_KEY"
+
+  change_owner_signature(account_address, owner_address, private_key)
+```
+
+
+
 
